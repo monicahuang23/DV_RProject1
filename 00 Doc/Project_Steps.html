@@ -112,14 +112,14 @@ df &lt;- data.frame(fromJSON(getURL(URLencode('129.152.144.84:5001/rest/native/?
 ##                                    (Other) :853                    
 ##          CABIN     EMBARKED  
 ##  null       :688   C   :168  
-##  B96 B98    :  4   null:  2  
-##  C23 C25 C27:  4   Q   : 77  
-##  G6         :  4   S   :645  
+##  B96 B98    :  4   Q   : 77  
+##  C23 C25 C27:  4   S   :645  
+##  G6         :  4   null:  2  
 ##  C22 C26    :  3             
 ##  D          :  3             
 ##  (Other)    :186</code></pre>
 <p><strong>8. Produce one new, interesting plot for the Titanic data.</strong></p>
-<p><strong>9. Produce the plots</strong><br /><em>NOTE: The SQL statement in the code was changed in the creation of each of the plots below to the indicated SQL statement</em></p>
+<p><strong>9. Produce the plots</strong><br /><em>NOTE: The SQL statement indicated was used in the creation of the plots</em></p>
 <div id="plot-2" class="section level3">
 <h3>Plot #2</h3>
 <p><strong>SQL Statement:</strong></p>
@@ -144,7 +144,7 @@ df &lt;- data.frame(fromJSON(getURL(URLencode('129.152.144.84:5001/rest/native/?
 <div id="plot-3" class="section level3">
 <h3>Plot #3</h3>
 <p><strong>SQL Statement:</strong></p>
-<pre><code>SELECT * FROM titanic WHERE age is not null</code></pre>
+<pre><code>SELECT * FROM titanic WHERE sex is not null</code></pre>
 <pre><code>ggplot() + 
   coord_cartesian() + 
   scale_x_discrete() +
@@ -164,7 +164,7 @@ df &lt;- data.frame(fromJSON(getURL(URLencode('129.152.144.84:5001/rest/native/?
 <div id="plot-4" class="section level3">
 <h3>Plot #4</h3>
 <p><strong>SQL Statement:</strong></p>
-<pre><code>SELECT * FROM titanic WHERE age where sex is not null&quot;</code></pre>
+<pre><code>SELECT * FROM titanic WHERE where sex is not null&quot;</code></pre>
 <pre><code>ggplot() + 
   coord_cartesian() + 
   scale_x_discrete() +

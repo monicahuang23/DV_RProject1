@@ -68,7 +68,8 @@ img {
 </div>
 
 
-<p>In order to create our plots, we first had to create a dataframe from the Titanic data. We did so using the code below.</p>
+<p>After creating a repository on GitHubt to manage our code, we then created a dataframe from the titanic data. Using the SQL statement:</p>
+<pre><code>SELECT * FROM titanic</code></pre>
 <pre class="r"><code># Change the USER and PASS below to be your UTEid
 df &lt;- data.frame(fromJSON(getURL(URLencode('129.152.144.84:5001/rest/native/?query=&quot;select * from titanic where sex is not null&quot;'),httpheader=c(DB='jdbc:oracle:thin:@129.152.144.84:1521/PDBF15DV.usuniversi01134.oraclecloud.internal', USER='cs329e_mh42375', PASS='orcl_mh42375', MODE='native_mode', MODEL='model', returnDimensions = 'False', returnFor = 'JSON'), verbose = TRUE), ))</code></pre>
 <p><strong>7. Display a subset and summary of the Titanic data frame.</strong></p>
@@ -107,9 +108,9 @@ df &lt;- data.frame(fromJSON(getURL(URLencode('129.152.144.84:5001/rest/native/?
 ##                                    (Other) :853                    
 ##          CABIN     EMBARKED  
 ##  null       :688   C   :168  
-##  B96 B98    :  4   null:  2  
-##  C23 C25 C27:  4   Q   : 77  
-##  G6         :  4   S   :645  
+##  B96 B98    :  4   Q   : 77  
+##  C23 C25 C27:  4   S   :645  
+##  G6         :  4   null:  2  
 ##  C22 C26    :  3             
 ##  D          :  3             
 ##  (Other)    :186</code></pre>

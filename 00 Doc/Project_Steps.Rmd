@@ -51,6 +51,29 @@ summary(df)
 **9. Produce the plots**  
 *NOTE: The SQL statement indicated was used in the creation of the plots*  
 
+### Plot #1 ###
+**SQL Statement:**  
+```
+SELECT * FROM titanic
+```  
+```
+ggplot() + 
+  coord_cartesian() + 
+  scale_x_continuous() +
+  scale_y_continuous() +
+  labs(title='Titanic') +
+  labs(x="Age", y="Fare") +
+  layer(data=df, 
+        mapping=aes(x=as.numeric(as.character(AGE)), y=as.numeric(as.character(FARE)), color=SEX), 
+        stat="identity", 
+        stat_params=list(), 
+        geom="point",
+        geom_params=list(), 
+        position=position_jitter(width=0.3, height=0)
+  )
+```
+This plot visualizes the ages of all passengers versus their ticket fares. They are color coded by sex, and the legend includes a "null" category. A larger number of women paid fares over $200. 
+
 ### Plot #2 ###      
 **SQL Statement:**  
 ```
