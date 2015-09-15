@@ -64,11 +64,12 @@ ggplot() +
         geom="point", geom_params=list(),
         position=position_jitter(width=0.5,height=0.3)
   )
-```
-![](../02 Visualizations/UniquePlot.png)
-This plot 
-
-**9. Produce the plots**  
+```  
+![](../02 Visualizations/UniquePlot.png)  
+  
+This plot shows the age of passengers plotted against their fares and colored by sex. They are separated by passenger class. It demonstates that passengers in low classes (2 and 3) all paid less than $100 for their fares despite their age or sex. In first class, many of the passengers paid over $100, as expected. However, it is interesting that there are more women that paid over $100 in first class than men. While men did pay the highest price out of all the ticket fares, a larger number of women had more expensive tickets, and were a younger age than men that paid a lower price for their first class tickets.  
+  
+**9. Produce the indicated plots**  
 *NOTE: The SQL statement indicated was used in the creation of the plots*  
 
 ### Plot #1 ###
