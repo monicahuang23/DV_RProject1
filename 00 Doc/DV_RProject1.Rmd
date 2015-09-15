@@ -1,30 +1,14 @@
 ---
-title: "CS 329e Project 1 Steps"
+title: "Data Visualization R Project 1"
 author: "Monica Huang and Rachel Arthur"
-date: "September 12, 2015"
+date: "September 15, 2015"
 output: html_document
 ---
-**1. First, create a GitHub Repository and name it "DV_RProject1"**  
-![](./Step1.png)
-![](./Step2.png)
 
-**2. Create a folder in the Data Visualization folder for all project contents. Clone the DV_RProject1 Repository into that folder.**
-![](./Step3.png)
-![](./Step4.png)
-
-**3. Create an RStudio DV_RProject1 Project in the same folder you created earlier.**
-![](./Step6.png)
-
-**4. Create structures in the RStudio DV_RProject1 project:**
-    00 Doc
-    01 Data
-    02 Visualizations
-![](./Step7.png)
-
-**5. Build an html file using KnitR that reproduces your project.**
-![](./Step8.png)
-
-**6. Build a data frame for the Titanic data.**
+After creating a repository on GitHubt to manage our code, we then created a dataframe from the titanic data. Using the SQL statement:
+```
+SELECT * FROM titanic
+```
 
 ```{r, include=FALSE}
 require("jsonlite")
