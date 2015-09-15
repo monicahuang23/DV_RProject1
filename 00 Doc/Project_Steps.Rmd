@@ -47,6 +47,26 @@ summary(df)
 ```
 
 **8. Produce one new, interesting plot for the Titanic data.**
+```
+SELECT * FROM titanic WHERE sex is not null
+```  
+```
+ggplot() +
+  coord_cartesian() +
+  scale_x_continuous() +
+  scale_y_continuous() +
+  facet_grid(PCLASS~., labeller = label_both) +
+  labs(title="Titanic", x="Age", y="Fare")+
+  layer(data=df,
+        mapping=aes(x=as.numeric(as.character(AGE)), y=as.numeric(as.character(FARE)), color=SEX),
+        stat="identity",
+        stat_params=list(),
+        geom="point", geom_params=list(),
+        position=position_jitter(width=0.5,height=0.3)
+  )
+```
+![](../02 Visualizations/UniquePlot.png)
+This plot 
 
 **9. Produce the plots**  
 *NOTE: The SQL statement indicated was used in the creation of the plots*  
