@@ -4,196 +4,76 @@ author: "Monica Huang and Rachel Arthur"
 date: "September 12, 2015"
 output: html_document
 ---
-**1. First, create a GitHub Repository and name it "DV_RProject1"**  
-![](./Step1.png)
-![](./Step2.png)
-
-**2. Create a folder in the Data Visualization folder for all project contents. Clone the DV_RProject1 Repository into that folder.**
-![](./Step3.png)
-![](./Step4.png)
-
-**3. Create an RStudio DV_RProject1 Project in the same folder you created earlier.**
-![](./Step6.png)
-
-**4. Create structures in the RStudio DV_RProject1 project:**
-    00 Doc
-    01 Data
-    02 Visualizations
-![](./Step7.png)
-
-**5. Build an html file using KnitR that reproduces your project.**
-![](./Step8.png)
-
-**6. Build a data frame for the Titanic data.**
-
 ```{r, include=FALSE}
 require("jsonlite")
 require("RCurl")
+require("ggplot2")
 ```
-``` {r}
-# Change the USER and PASS below to be your UTEid
-df <- data.frame(fromJSON(getURL(URLencode('129.152.144.84:5001/rest/native/?query="select * from titanic where sex is not null"'),httpheader=c(DB='jdbc:oracle:thin:@129.152.144.84:1521/PDBF15DV.usuniversi01134.oraclecloud.internal', USER='cs329e_mh42375', PASS='orcl_mh42375', MODE='native_mode', MODEL='model', returnDimensions = 'False', returnFor = 'JSON'), verbose = TRUE), ))
-```
-
-**7. Display a subset and summary of the Titanic data frame.** 
-
-Subsets:  
-```{r, echo=FALSE}
-head(subset(df, select=c(PCLASS, NAME, FARE)))
-```
-Summary:
-```{r, echo=FALSE}
-summary(df)
-```
-
-**8. Produce one new, interesting plot for the Titanic data.**
-```
-SELECT * FROM titanic WHERE sex is not null
+###**Step 1: Build a data frame for the Titanic data**   
+We built the data frame for the plot in step 8 using SQL to select all data from the titanic data set where the sex was not null. It was used to create plots #2-4 and our unique plot in step 3.  
+```{r}
+source("../01 Data/SexNotNullDF.R", echo = TRUE)
 ```  
-```
-ggplot() +
-  coord_cartesian() +
-  scale_x_continuous() +
-  scale_y_continuous() +
-  facet_grid(PCLASS~., labeller = label_both) +
-  labs(title="Titanic", x="Age", y="Fare")+
-  layer(data=df,
-        mapping=aes(x=as.numeric(as.character(AGE)), y=as.numeric(as.character(FARE)), color=SEX),
-        stat="identity",
-        stat_params=list(),
-        geom="point", geom_params=list(),
-        position=position_jitter(width=0.5,height=0.3)
-  )
-```  
-![](../02 Visualizations/UniquePlot.png)  
   
-This plot shows the age of passengers plotted against their fares and colored by sex. They are separated by passenger class. It demonstates that passengers in low classes (2 and 3) all paid less than $100 for their fares despite their age or sex. In first class, many of the passengers paid over $100, as expected. However, it is interesting that there are more women that paid over $100 in first class than men. While men did pay the highest price out of all the ticket fares, a larger number of women had more expensive tickets, and were a younger age than men that paid a lower price for their first class tickets.  
+###**Step 2: Display a subset and summary of the Titanic data frame**  
+```{r}
+source("../01 Data/headAndSummary.R", echo = TRUE)
+```  
   
-**9. Produce the indicated plots**  
-*NOTE: The SQL statement indicated was used in the creation of the plots*  
-
-### Plot #1 ###
-**SQL Statement:**  
-```
-SELECT * FROM titanic
-```  
-```
-ggplot() + 
-  coord_cartesian() + 
-  scale_x_continuous() +
-  scale_y_continuous() +
-  labs(title='Titanic') +
-  labs(x="Age", y="Fare") +
-  layer(data=df, 
-        mapping=aes(x=as.numeric(as.character(AGE)), y=as.numeric(as.character(FARE)), color=SEX), 
-        stat="identity", 
-        stat_params=list(), 
-        geom="point",
-        geom_params=list(), 
-        position=position_jitter(width=0.3, height=0)
-  )
-```
-This plot visualizes the ages of all passengers versus their ticket fares. They are color coded by sex, and the legend includes a "null" category. A larger number of women paid fares over $200. 
-
-### Plot #2 ###      
-**SQL Statement:**  
-```
-SELECT * FROM titanic WHERE sex is not null
-```  
-```
-ggplot() + 
-  coord_cartesian() + 
-  scale_x_continuous() +
-  scale_y_continuous() +
-  labs(title='Titanic') +
-  labs(x="Age", y="Fare") +
-  layer(data=df, 
-        mapping=aes(x=as.numeric(AGE), y=as.numeric(as.character(FARE)), color=SEX), 
-        stat="identity", 
-        stat_params=list(), 
-        geom="point",
-        geom_params=list(), 
-        position=position_jitter(width=0.3, height=0)
-  )  
-```
+###**Step 3: Produce one new, interesting plot for the Titanic data.**  
   
-This plot visualizes the ages of all passengers versus their ticket fares. They are color coded by sex. A larger number of women paid fares over $200.  
+Using the titanic dataframe produced in step 1 where sex is not null, this plot visualizes the age of passengers versus their fares and colored by sex. They are separated by passenger class. It demonstates that passengers in lower classes (2 and 3) all paid less than $100 for their fares despite their age or sex. In first class, many of the passengers paid over $100, as expected. However, it is interesting that there are more women that paid over $100 in first class than men. While men did pay the highest price out of all the ticket fares, a larger number of women had more expensive tickets, and were a younger age than men that paid a lower price for their first class tickets.  
+``` {r, warning = FALSE}
+ source("../02 Visualizations/UniquePlot.R", echo = TRUE)
+```  
   
-![](../02 Visualizations/Plot2.png)
+###**Step 4: Produce the indicated plots**    
 
-### Plot #3 ###  
-
-**SQL Statement:**  
-```
-SELECT * FROM titanic WHERE sex is not null
+#### Plot #1  
+For plot #1, the SQL statement selected all of the titanic data when creating the dataframe used in the visualization.  
+```{r}
+source("../01 Data/AllTitanic.R", echo = TRUE)
+```   
+```{r, warning = FALSE}
+source("../02 Visualizations/Plot1.R", echo = TRUE)
 ```  
-```
-ggplot() + 
-  coord_cartesian() + 
-  scale_x_discrete() +
-  scale_y_continuous() +
-  labs(title='Titanic') +
-  labs(x="Survived", y=paste("Fare")) +
-  layer(data=df, 
-        mapping=aes(x=SEX, y=as.numeric(as.character(FARE)), color=as.character(SURVIVED)), 
-        stat="identity", 
-        stat_params=list(), 
-        geom="point",
-        geom_params=list(), 
-        position=position_jitter(width=0.3, height=0)
-  )
-```
-This plot visualizes the surviving males and females on the Titanic and their ticket fares. More women surivived the crash, which is not surprising because they were the ones allowed onto the life boats first, along with children.  
-![](../02 Visualizations/Plot3.png)
   
-### Plot #4 ### 
+This plot visualizes the ages of all passengers versus their ticket fares. They are color coded by sex, and the legend includes a "null" category, because the query selector selected all of the data - even values equal to null. One observation that can be make from this visualization is that a larger number of women paid fares over $200 than men.   
 
-**SQL Statement:**   
-```
-SELECT * FROM titanic WHERE where sex is not null"
+#### The dataframe used in Plots #2-4 included only values where sex was not equal to null. This was to exclude the null category when plotting the AGE and SEX Values.    
+```{r}
+source("../01 Data/SexNotNullDF.R", echo = TRUE)
 ```  
-```
-ggplot() + 
-  coord_cartesian() + 
-  scale_x_discrete() +
-  scale_y_continuous() +
-  facet_grid(PCLASS~SURVIVED, labeller=label_both) +
-  labs(title='Titanic') +
-  labs(x="Survived", y=paste("Fare")) +
-  layer(data=df, 
-        mapping=aes(x=SEX, y=as.numeric(as.character(FARE)), color=SEX), 
-        stat="identity", 
-        stat_params=list(), 
-        geom="point",
-        geom_params=list(), 
-        position=position_jitter(width=0.3, height=0)
-  )
+  
+#### Plot #2
+```{r, warning = FALSE}
+source("../02 Visualizations/Plot2.R", echo = TRUE)
 ```  
+  
+This plot visualizes the ages of all passengers versus their ticket fares. They are color coded by sex. A larger number of women paid fares over $200.
+
+#### Plot #3
+```{r, warning = FALSE}
+source("../02 Visualizations/Plot3.R", echo = TRUE)
+```  
+  
+This plot visualizes the surviving males and females on the Titanic and their ticket fares. More women surivived the crash, which is not surprising because they were the ones allowed onto the life boats first, along with children. It was also made using the same dataframe as plot #2.  
+  
+#### Plot #4  
+```{r, warning = FALSE}
+source("../02 Visualizations/Plot4.R", echo = TRUE)
+```  
+  
 This plot shows whether passengers survived based on their ticket fare, sex, and class. Passengers in classes 1 and 2 were more likely to survive if they were females. Passengers in class 3 were less likely to survive than passengers in classes 1 and 2, whether they were male or female.  
-![](../02 Visualizations/Plot4.png)
-  
-### Plot #5 ### 
 
-**SQL Statement:**  
-```
-SELECT * FROM titanic WHERE age <= 10"
+#### Plot #5
+**The dataframe used in plot #5 selected only entries where AGE was less than or equal to 10. This also could have been achieved by only visualizing a subset of the data where AGE <= 10 using the subset function**    
+```{r}
+source("../01 Data/AgeLessThan10.R", echo = TRUE)
 ```  
-```
-ggplot() + 
-  coord_cartesian() + 
-  scale_x_discrete() +
-  scale_y_continuous() +
-  facet_grid(PCLASS~SURVIVED, labeller=label_both) +
-  labs(title='Titanic where age <= 10') +
-  labs(x="Survived", y=paste("Fare")) +
-  layer(data=df, 
-        mapping=aes(x=SEX, y=as.numeric(as.character(FARE)), color=SEX), 
-        stat="identity", 
-        stat_params=list(), 
-        geom="point",
-        geom_params=list(), 
-        position=position_jitter(width=0.3, height=0)
-  )
+  
+```{r, warning = FALSE}
+source("../02 Visualizations/Plot5.R", echo = TRUE)
 ```  
-This plot shows the survival of passengers under the age of ten based on class, sex, and ticket fare. There is no clear difference between the survival of children in class 3, but class 2 children all survived.    
-![](../02 Visualizations/Plot5.png)
+  
+This plot shows the survival of passengers under the age of ten based on class, sex, and ticket fare. There is no clear difference between the survival of children in class 3, but class 2 children all survived. It was made using a query selector statement that selected only data where AGE was less than or equal to 10.
